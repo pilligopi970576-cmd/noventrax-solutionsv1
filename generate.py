@@ -7,7 +7,7 @@ and js/main.js. Run: python3 generate.py
 import os, re, html
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-SITE_URL = "https://www.noventrax.com"
+SITE_URL = "https://noventraxsolutions.in"
 
 # ---------------------------------------------------------------------------
 # ICONS (small original line-icon set, hand-authored, 24x24 viewBox)
@@ -97,8 +97,8 @@ FOOTER_LEGAL = [
 ]
 
 CONTACT_INFO = {
-    "phone": "+91 9346494520",
-    "email": "info@noventraxsolutions.com",
+    "phone": "+91 93464 94520",
+    "email": "info@noventraxsolutions.in",
     "address": "7-8 Bethsamane, Vijayawada, Andhra Pradesh 521227",
 }
 
@@ -786,8 +786,8 @@ def build_home():
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Noventrax Solutions",
-  "url": "https://www.noventrax.com",
-  "logo": "https://www.noventrax.com/assets/icons/logo-mark.svg",
+  "url": "https://noventraxsolutions.in",
+  "logo": "https://noventraxsolutions.in/assets/icons/logo-mark.svg",
   "sameAs": [
     "https://www.linkedin.com/company/noventrax-solutions",
     "https://github.com/noventrax-solutions",
@@ -1255,7 +1255,7 @@ def build_contact():
     <div class="card reveal">
       <div class="icon-wrap">{icon('chat')}</div>
       <h3>Phone</h3>
-      <p><a href="tel:+14155550142" style="color:var(--text-hi);">{CONTACT_INFO['phone']}</a></p>
+      <p><a href="tel:{CONTACT_INFO['phone'].replace(' ', '').replace('(', '').replace(')', '')}" style="color:var(--text-hi);">{CONTACT_INFO['phone']}</a></p>
       <p style="font-size:.85rem;color:var(--text-mute);">Mon–Fri, 8am–6pm PT</p>
     </div>
     <div class="card reveal">
