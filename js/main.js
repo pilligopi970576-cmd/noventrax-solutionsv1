@@ -148,6 +148,155 @@
     }
   }
 
+  /* ---------- Firefly network hero visual ---------- */
+  (function(){
+    var wrap = document.getElementById('fireflyHero');
+    var canvas = document.getElementById('fireflyCanvas');
+    if(!wrap || !canvas) return;
+    var ctx = canvas.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = 0, h = 0, cx = 0, cy = 0, radius = 0;
+    var mouse = { x: -9999, y: -9999, active: false };
+    var particles = [];
+    var COUNT = 9;
+    var LINK_DIST = 0.34;   // relative to radius
+    var MOUSE_DIST = 0.22;  // relative to radius
+
+    function size(){
+      var rect = wrap.getBoundingClientRect();
+      w = rect.width; h = rect.height;
+      if(w < 10 || h < 10){
+        // container not laid out yet (e.g. fonts/CSS still settling) — retry shortly
+        setTimeout(size, 120);
+        return;
+      }
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cx = w / 2; cy = h / 2;
+      radius = Math.min(w, h) * 0.46;
+      if(particles.length === 0) makeParticles();
+    }
+
+    function makeParticles(){
+      particles = [];
+      for(var i = 0; i < COUNT; i++){
+        var angle = Math.random() * Math.PI * 2;
+        var dist = radius * (0.35 + Math.random() * 0.6);
+        particles.push({
+          x: cx + Math.cos(angle) * dist,
+          y: cy + Math.sin(angle) * dist,
+          vx: (Math.random() - 0.5) * 0.25,
+          vy: (Math.random() - 0.5) * 0.25,
+          r: 2 + Math.random() * 1.6
+        });
+      }
+    }
+
+    size();
+    window.addEventListener('resize', function(){ size(); });
+
+    wrap.addEventListener('mousemove', function(e){
+      var rect = wrap.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+      mouse.active = true;
+    });
+    wrap.addEventListener('mouseleave', function(){ mouse.active = false; });
+
+    function step(){
+      particles.forEach(function(p){
+        // gentle drift
+        p.x += p.vx; p.y += p.vy;
+
+        // soft circular boundary containment
+        var dx = p.x - cx, dy = p.y - cy;
+        var d = Math.hypot(dx, dy);
+        if(d > radius){
+          var nx = dx / d, ny = dy / d;
+          p.x = cx + nx * radius; p.y = cy + ny * radius;
+          p.vx -= nx * 0.04; p.vy -= ny * 0.04;
+        }
+
+        // gentle cursor avoidance
+        if(mouse.active){
+          var mdx = p.x - mouse.x, mdy = p.y - mouse.y;
+          var mdist = Math.hypot(mdx, mdy);
+          var threshold = radius * MOUSE_DIST;
+          if(mdist < threshold && mdist > 0.01){
+            var force = (1 - mdist / threshold) * 0.06;
+            p.vx += (mdx / mdist) * force;
+            p.vy += (mdy / mdist) * force;
+          }
+        }
+
+        // gentle drag so it doesn't speed up forever
+        p.vx *= 0.985; p.vy *= 0.985;
+
+        // tiny random wander
+        p.vx += (Math.random() - 0.5) * 0.006;
+        p.vy += (Math.random() - 0.5) * 0.006;
+      });
+    }
+
+    function draw(){
+      ctx.clearRect(0, 0, w, h);
+
+      // faint concentric guide rings
+      ctx.strokeStyle = 'rgba(207,208,211,0.10)';
+      ctx.lineWidth = 1;
+      [0.55, 0.78, 1].forEach(function(f){
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius * f, 0, Math.PI * 2);
+        ctx.stroke();
+      });
+
+      // connecting lines between nearby particles
+      var linkThreshold = radius * LINK_DIST;
+      for(var i = 0; i < particles.length; i++){
+        for(var j = i + 1; j < particles.length; j++){
+          var a = particles[i], b = particles[j];
+          var dist = Math.hypot(a.x - b.x, a.y - b.y);
+          if(dist < linkThreshold){
+            var alpha = (1 - dist / linkThreshold) * 0.35;
+            ctx.strokeStyle = 'rgba(200,68,86,' + alpha.toFixed(3) + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // particles themselves, glowing
+      particles.forEach(function(p){
+        var grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 4);
+        grad.addColorStop(0, 'rgba(201,68,86,0.9)');
+        grad.addColorStop(1, 'rgba(201,68,86,0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = 'rgba(242,240,238,0.9)';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    if(reducedMotion){
+      draw(); // single static frame, no animation loop
+    } else {
+      (function loop(){
+        step();
+        draw();
+        requestAnimationFrame(loop);
+      })();
+    }
+  })();
+
   /* ---------- Header background lattice generator ---------- */
   var latticeSVG = document.querySelector('.lattice-bg svg');
   if(latticeSVG){

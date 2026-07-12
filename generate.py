@@ -651,38 +651,14 @@ print("Generated services.html")
 # ---------------------------------------------------------------------------
 def hero_visual():
     return """
-<svg viewBox="0 0 400 400" fill="none" aria-hidden="true">
-  <defs>
-    <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#c94456" stop-opacity="0.9"/>
-      <stop offset="100%" stop-color="#c94456" stop-opacity="0"/>
-    </radialGradient>
-  </defs>
-  <circle cx="200" cy="200" r="120" fill="url(#coreGlow)" opacity="0.35"/>
-  <g stroke="rgba(207,208,211,0.18)" stroke-width="1">
-    <circle cx="200" cy="200" r="80"/>
-    <circle cx="200" cy="200" r="130"/>
-    <circle cx="200" cy="200" r="180"/>
-  </g>
-  <g style="transform-origin:200px 200px" class="orbit-slow">
-    <circle cx="200" cy="20" r="5" fill="#c94456"/>
-    <circle cx="330" cy="120" r="3.5" fill="#a8323f"/>
-    <circle cx="330" cy="280" r="4" fill="#cfd0d3" fill-opacity="0.6"/>
-    <circle cx="70" cy="280" r="3" fill="#a8323f"/>
-    <circle cx="70" cy="120" r="4.5" fill="#c94456"/>
-    <line x1="200" y1="20" x2="330" y2="120" stroke="rgba(200,68,86,0.4)"/>
-    <line x1="330" y1="120" x2="330" y2="280" stroke="rgba(200,68,86,0.25)"/>
-    <line x1="330" y1="280" x2="70" y2="280" stroke="rgba(200,68,86,0.2)"/>
-    <line x1="70" y1="280" x2="70" y2="120" stroke="rgba(200,68,86,0.25)"/>
-    <line x1="70" y1="120" x2="200" y2="20" stroke="rgba(200,68,86,0.4)"/>
-  </g>
-  <path d="M182 160V240L200 200L218 160V240" stroke="#f2f0ee" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-  <style>
-    .orbit-slow{ animation: spin 46s linear infinite; }
-    @media (prefers-reduced-motion: reduce){ .orbit-slow{ animation:none; } }
-    @keyframes spin{ from{ transform:rotate(0deg);} to{ transform:rotate(360deg);} }
-  </style>
-</svg>
+<div class="firefly-hero" id="fireflyHero">
+  <canvas id="fireflyCanvas" aria-hidden="true"></canvas>
+  <div class="n-glyph" tabindex="0" aria-label="Noventrax">
+    <svg viewBox="0 0 64 64" fill="none">
+      <path d="M14 50V14L38 50V14" stroke="#f2f0ee" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</div>
 """
 
 def build_home():
