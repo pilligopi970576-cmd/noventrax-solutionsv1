@@ -97,9 +97,9 @@ FOOTER_LEGAL = [
 ]
 
 CONTACT_INFO = {
-    "phone": "+1 (415) 555-0142",
-    "email": "hello@noventrax.com",
-    "address": "500 Folsom Street, Suite 2100, San Francisco, CA 94105, United States",
+    "phone": "+91 9346494520",
+    "email": "info@noventraxsolutions.com",
+    "address": "7-8 Bethsamane, Vijayawada, Andhra Pradesh 521227",
 }
 
 # ---------------------------------------------------------------------------
