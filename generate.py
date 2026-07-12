@@ -49,6 +49,21 @@ def icon(name, cls=""):
     body = ICONS.get(name, ICONS["code"])
     return f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="{cls}" aria-hidden="true">{body}</svg>'
 
+def brand_mark():
+    return """<svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="bmg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#c94456"/>
+          <stop offset="1" stop-color="#7a1f2b"/>
+        </linearGradient>
+      </defs>
+      <path d="M14 50V14L38 50V14" stroke="url(#bmg)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="14" cy="14" r="3.6" fill="#0b0d10" stroke="url(#bmg)" stroke-width="2.2"/>
+      <circle cx="14" cy="50" r="3.6" fill="#0b0d10" stroke="url(#bmg)" stroke-width="2.2"/>
+      <circle cx="38" cy="14" r="3.6" fill="#0b0d10" stroke="url(#bmg)" stroke-width="2.2"/>
+      <circle cx="38" cy="50" r="3.6" fill="#0b0d10" stroke="url(#bmg)" stroke-width="2.2"/>
+    </svg>"""
+
 # ---------------------------------------------------------------------------
 # NAV / FOOTER DATA
 # ---------------------------------------------------------------------------
@@ -162,7 +177,7 @@ def header_nav(active):
 <header class="site">
   <div class="container nav-row">
     <a href="index.html" class="brand">
-      {icon("code")}
+      {brand_mark()}
       Noventrax<span style="color:var(--ember-glow)">.</span>
     </a>
     <nav class="primary" id="primary-nav">
@@ -212,7 +227,7 @@ def footer():
   <div class="container">
     <div class="footer-grid">
       <div class="footer-col">
-        <a href="index.html" class="brand" style="margin-bottom:16px;">{icon("code")} Noventrax<span style="color:var(--ember-glow)">.</span></a>
+        <a href="index.html" class="brand" style="margin-bottom:16px;">{brand_mark()} Noventrax<span style="color:var(--ember-glow)">.</span></a>
         <p style="max-width:34ch;color:var(--text-mute);font-size:.92rem;">Engineering the systems the future runs on — for startups, enterprises, and governments worldwide.</p>
         <div class="social-row" style="margin-top:20px;">{social_html}</div>
       </div>
