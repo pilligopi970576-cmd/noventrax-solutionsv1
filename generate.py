@@ -241,7 +241,7 @@ def footer():
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Noventrax Solutions, Inc. All rights reserved.</p>
+      <p>© 2026 Noventrax Solutions. All rights reserved.</p>
       <div style="display:flex;gap:20px;flex-wrap:wrap;">
         {"".join(f'<a href="{href}" style="font-size:.82rem;color:var(--text-faint);">{label}</a>' for href, label in FOOTER_LEGAL)}
       </div>
@@ -1373,7 +1373,7 @@ def build_terms():
     sections = [
       ("Acceptance of Terms", "<p>By accessing or using the Noventrax Solutions website, you agree to be bound by these Terms & Conditions. If you do not agree, please discontinue use of the site.</p>"),
       ("Use of Services", "<p>Our website and its content are provided for informational purposes about our services. Engagement for actual project delivery is governed separately by a signed statement of work or master services agreement.</p>"),
-      ("Intellectual Property", "<p>All content on this website — including text, graphics, logos, and design — is the property of Noventrax Solutions, Inc. unless otherwise noted, and may not be reproduced without permission.</p>"),
+      ("Intellectual Property", "<p>All content on this website — including text, graphics, logos, and design — is the property of Noventrax Solutions unless otherwise noted, and may not be reproduced without permission.</p>"),
       ("Client Deliverables", "<p>Ownership of code, designs, and other deliverables produced under a signed engagement transfers to the client as specified in that engagement's contract, typically upon final payment.</p>"),
       ("Limitation of Liability", "<p>To the fullest extent permitted by law, Noventrax Solutions is not liable for indirect, incidental, or consequential damages arising from use of this website.</p>"),
       ("Governing Law", "<p>These terms are governed by the laws of the State of California, without regard to conflict-of-law principles.</p>"),
